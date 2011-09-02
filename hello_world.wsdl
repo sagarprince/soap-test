@@ -12,7 +12,10 @@
    <message name="SayHelloResponse">
       <part name="greeting" type="xsd:string"/>
    </message>
- 
+   <message name="ArrayResponse">
+      <part name="info" type="xsd:struct"/>
+   </message>
+
    <portType name="Hello_PortType">
       <operation name="sayHello">
          <input message="tns:SayHelloRequest"/>
@@ -21,6 +24,10 @@
       <operation name="sayGoodbye">
          <input message="tns:SayHelloRequest"/>
          <output message="tns:SayHelloResponse"/>
+      </operation>
+      <operation name="getAddress">
+         <input message="tns:SayHelloRequest"/>
+         <output message="tns:ArrayResponse"/>
       </operation>
    </portType>
    
@@ -42,8 +49,23 @@
                use="encoded"/>
          </output>
       </operation>
-			<operation name="sayGoodbye">
-         <soap:operation soapAction="sayHello"/>
+      <operation name="sayGoodbye">
+         <soap:operation soapAction="sayGoodbye"/>
+         <input>
+            <soap:body
+               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+               namespace="urn:examples:helloservice"
+               use="encoded"/>
+         </input>
+         <output>
+            <soap:body
+               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+               namespace="urn:examples:helloservice"
+               use="encoded"/>
+         </output>
+      </operation>
+      <operation name="getAddress">
+         <soap:operation soapAction="getAddress"/>
          <input>
             <soap:body
                encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"

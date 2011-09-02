@@ -6,6 +6,9 @@ class HelloWorld {
   public static function sayGoodbye($name) {
     return "Goodbye $name!\n";
   }
+  public static function getAddress($name) {
+    return array('name'=>$name, 'address'=>'1060 W Addison');
+  }
 }
 
 $server = new SoapServer("hello_world.wsdl", array(
