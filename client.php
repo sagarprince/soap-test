@@ -11,6 +11,10 @@ if(count($argv) != 3) {
   exit;
 }
 
-$client = new SoapClient( "hello_world.wsdl", array( 'location' => $argv[1] ) );
+$client = new SoapClient( "hello_world.wsdl", array( 
+  'cache_wsdl' => WSDL_CACHE_NONE,
+  'location' => $argv[1]
+));
 echo $client->sayHello( $argv[2] );
+echo $client->sayGoodbye( $argv[2] );
 ?>

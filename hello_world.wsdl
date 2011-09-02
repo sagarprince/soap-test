@@ -18,12 +18,31 @@
          <input message="tns:SayHelloRequest"/>
          <output message="tns:SayHelloResponse"/>
       </operation>
+      <operation name="sayGoodbye">
+         <input message="tns:SayHelloRequest"/>
+         <output message="tns:SayHelloResponse"/>
+      </operation>
    </portType>
    
    <binding name="Hello_Binding" type="tns:Hello_PortType">
       <soap:binding style="rpc" 
          transport="http://schemas.xmlsoap.org/soap/http"/>
       <operation name="sayHello">
+         <soap:operation soapAction="sayHello"/>
+         <input>
+            <soap:body
+               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+               namespace="urn:examples:helloservice"
+               use="encoded"/>
+         </input>
+         <output>
+            <soap:body
+               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+               namespace="urn:examples:helloservice"
+               use="encoded"/>
+         </output>
+      </operation>
+			<operation name="sayGoodbye">
          <soap:operation soapAction="sayHello"/>
          <input>
             <soap:body
