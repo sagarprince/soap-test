@@ -59,14 +59,16 @@ try {
     'ObjectType'=>'Contact',
     'CvSearchObject'=>array(
       'Filter'=>array(
-        'Field'=>'Email',
+        'Field'=>'LastName',
         'Operator'=>'Equals',
-        'Value'=>'someone@example.com'
+        'Value'=>'McTester'
       )
     )
   ));
-  var_dump($search);
   displayXmlConversation($client);
+  
+  echo "Search returned:\n";
+  var_dump($search);
   
   // // CHECK FOR NEW/UPDATED REGISTRATIONS
   // $client->__setSoapHeaders($auth_header);
