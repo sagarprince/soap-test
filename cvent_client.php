@@ -24,6 +24,12 @@ function displayXmlConversation($client) {
 }
 
 
+class CventAuthHeader {
+  public $CventSessionValue;
+  public function __construct($token) {
+    $this->CventSessionValue = $token;
+  }
+}
 
 $client = new SoapClient( "V200611.ASMX.xml", array( 
   'cache_wsdl' => WSDL_CACHE_NONE,
@@ -33,27 +39,21 @@ $client = new SoapClient( "V200611.ASMX.xml", array(
 
 
 // LOGIN
-$login = $client->Login(array(
-  'AccountNumber'=>$argv[1],
-  'UserName'=>$argv[2],
-  'Password'=>$argv[3]
-));
-displayXmlConversation($client);
-
-class CventAuthHeader {
-  public $CventSessionValue;
-  public function __construct($token) {
-    $this->CventSessionValue = $token;
-  }
-}
-$auth_header = new SoapHeader( 
-  "http://schemas.cvent.com/api/2006-11", 
-  "CventSessionHeader",
-  new CventAuthHeader($login->LoginResult->CventSessionHeader)
-);
-
-// SEARCH FOR CONTACTS
 try {
+  $login = $client->Login(array(
+    'AccountNumber'=>$argv[1],
+    'UserName'=>$argv[2],
+    'Password'=>$argv[3]
+  ));
+  displayXmlConversation($client);
+  
+  $auth_header = new SoapHeader(
+    "http://api.cvent.com/2006-11", 
+    "CventSessionHeader",
+    new CventAuthHeader($login->LoginResult->CventSessionHeader)
+  );
+  
+  // SEARCH FOR CONTACTS
   $client->__setSoapHeaders($auth_header);
   $search = $client->Search(array(
     'ObjectType'=>'Contact',
@@ -66,9 +66,20 @@ try {
     )
   ));
   var_dump($search);
+  displayXmlConversation($client);
+  
+  // // CHECK FOR NEW/UPDATED REGISTRATIONS
+  // $client->__setSoapHeaders($auth_header);
+  // $ids = $client->GetUpdated(array(
+  //   'ObjectType'=>'Registration',
+  //   'StartDate'=> new DateTime('-5 day'),
+  //   'EndDate'=> new DateTime()
+  // ));
+  // var_dump($ids);
+  // displayXmlConversation($client);
+  
 } catch(SoapFault $e) {
   displayXmlConversation($client);
 }
-
 
 ?>
