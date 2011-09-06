@@ -24,19 +24,11 @@ function displayXmlConversation($client) {
 }
 
 
-class CventAuthHeader {
-  public $CventSessionValue;
-  public function __construct($token) {
-    $this->CventSessionValue = $token;
-  }
-}
-
 $client = new SoapClient( "V200611.ASMX.xml", array( 
   'cache_wsdl' => WSDL_CACHE_NONE,
   'location' => "https://api.cvent.com/soap/V200611.ASMX",
   'trace'=>true
 ));
-
 
 // LOGIN
 try {
@@ -50,7 +42,9 @@ try {
   $auth_header = new SoapHeader(
     "http://api.cvent.com/2006-11", 
     "CventSessionHeader",
-    new CventAuthHeader($login->LoginResult->CventSessionHeader)
+    (object) array('CventSessionValue'=>
+      $login->LoginResult->CventSessionHeader
+    )
   );
   
   // SEARCH FOR CONTACTS
