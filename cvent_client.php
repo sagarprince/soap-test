@@ -23,8 +23,8 @@ function displayXmlConversation($client) {
   $count += 1;
 }
 
-function reallyBadIdea($int) {
-  return $int/0;
+function slightlyBetterIdea($int) {
+  return $int/1;
 }
 
 
