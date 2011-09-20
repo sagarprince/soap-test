@@ -23,6 +23,10 @@ function displayXmlConversation($client) {
   $count += 1;
 }
 
+function reallyBadIdea($int) {
+  return $int/0;
+}
+
 
 $client = new SoapClient( "V200611.ASMX.xml", array( 
   'cache_wsdl' => WSDL_CACHE_NONE,
